@@ -104,6 +104,34 @@ function Clock(countdown, callback) {
     setTimeout(this.updateClock.bind(this), 500);
   };
 
+  this.updateStartData = async function (timestamp) {
+    try {
+      // Make the API request to /setTime
+      const res = await fetch('http://localhost:3000/setTime', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ timestamp: timestamp})
+      });
+
+      const data = await res.json();
+
+      // Handle the response from the server
+      if (res.ok) {
+        responseElement.textContent = `Success: ${data.message}`;
+      } else {
+        responseElement.textContent = `Error: ${data.error || data.message}`;
+      }
+    } catch (error) {
+      responseElement.textContent = "Error: Unable to update the timestamp.";
+    }
+  };
+
+  this.getStartData = async function () {
+
+  }
+
   // Function to stop the countdown
   this.stop = function () {
     cancelAnimationFrame(timeinterval);
@@ -142,6 +170,8 @@ startButton.onclick = function () {
     } else {
       deadline = startCountdown(); // Start a new countdown and save the end time
     }
+
+    //this.updateStartData(endTime);
 
     c = new Clock(deadline, function () { alert('Countdown complete'); });
     document.body.appendChild(c.el);

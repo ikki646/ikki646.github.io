@@ -1,0 +1,134 @@
+/* Playground styles */
+html {
+  font-family: sans-serif;
+  background: #ebebeb;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Steps Progress Bar */
+ol.steps {
+  display: flex;
+  list-style: none;
+  text-align: center;
+  counter-reset: milestones; /* init counter */
+  width: 100%; /* previously $steps-width */
+  margin: 0;
+  padding: 0;
+}
+
+ol.steps li {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  font-size: .75em; /* previously $label-font-size */
+  line-height: 1.25em; /* previously $label-line-height */
+}
+
+ol.steps li a {
+  display: block;
+  text-decoration: none;
+}
+
+ol.steps li a::before,
+ol.steps li a::after {
+  display: block;
+  font-size: 1.25em; /* previously $counter-font-size */
+  box-sizing: border-box;
+}
+
+/* Circle */
+ol.steps li a::before {
+  border-radius: 50%;
+  text-decoration: none;
+  content: counter(milestones);
+  counter-increment: milestones;
+  width: 4em; /* previously $circle-diameter */
+  height: 4em; /* previously $circle-diameter */
+  line-height: 4em; /* previously $circle-diameter */
+  margin: 0 auto .5em;
+}
+
+/* Connecting line */
+ol.steps li a::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 0;
+  border: 0;
+  left: 50%;
+  top: 2em; /* previously $circle-diameter/2 */
+  border-bottom-width: .5em; /* previously $line-width */
+  margin-top: -.25em; /* previously -$line-width/2 */
+}
+
+/* Don't show for last element */
+ol.steps li:last-child a::after {
+  display: none;
+}
+
+/* Colors */
+ol.steps li a,
+ol.steps li a:visited {
+  color: #9ca09f;
+}
+
+/* Finished milestone - default */
+ol.steps li a::before {
+  color: #fdfefe;
+  background-color: #b32f59;
+  box-shadow: inset 0 0 0 .375em #9f2a4f; /* previously $circle-border-width */
+}
+ol.steps li a::after {
+  border-bottom-style: solid;
+  border-color: #9f2a4f;
+}
+
+/* Current milestone */
+ol.steps li.current a {
+  font-weight: 600;
+  color: #9f2a4f;
+}
+ol.steps li.current a::before {
+  color: #9f2a4f;
+  background-color: #fcfcfa;
+  box-shadow: inset 0 0 0 .375em #9f2a4f; /* previously $circle-border-width */
+}
+ol.steps li.current a::after {
+  border-style: dashed;
+  border-color: #9f2a4f;
+}
+
+/* Unfinished milestone */
+ol.steps li.current ~ li a::before {
+  color: #707070;
+  background-color: #e7e7e3;
+  box-shadow: inset 0 0 0 .375em #d4d4d4; /* previously $circle-border-width */
+}
+ol.steps li.current ~ li a::after {
+  border-bottom-style: none;
+}
+
+/* ikki custom */
+h1 {
+  font-size: 4em; /* You can adjust the size as needed */
+}
+
+h1.count {
+  font-size: 7em; /* You can adjust the size as needed */
+  color: #9f2a4f;
+}

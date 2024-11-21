@@ -1,17 +1,133 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>CodePen - Flip Clock &amp; Countdown</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="./style.css">
-
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./loading-bar-style.css">
+  <script src="https://cdn.jsdelivr.net/npm/countup.js"></script>
 </head>
-<body>
-<!-- partial:index.partial.html -->
 
-<!-- partial -->
-  <script  src="./script.js"></script>
+<body>
+  <button id="addSubscriberBtn">
+    <Address>add</Address>
+  </button> <!-- Button to trigger count increment -->
+  <button id="resetSubscriberBtn">
+    <Address>reset</Address>
+  </button> <!-- Button to trigger count increment -->
+  <h1 class="count">200</h1> <!-- This will display the animated count -->
+  <ol class="steps">
+    <li>
+      <a href="#">
+        <h1>Milestone A</h1>
+        <h2>200 euro</h2>
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        <h1>Milestone B</h1>
+        <h2>400 euro</h2>
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        <h1>Milestone C</h1>
+        <h2>800 euro</h2>
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        <h1>Milestone D</h1>
+        <h2>1600 euro</h2>
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        <h1>Milestone E</h1>
+        <h2>3200 euro</h2>
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        <h1>...</h1>
+        <h2>inf euro</h2>
+      </a>
+    </li>
+  </ol>
+  </br>
+  </br>
+  </br>
+
+  <!-- partial:index.partial.html -->
+
+  <!-- partial -->
+  <script src="./script.js"></script>
+  <script>
+    let money = sessionStorage.getItem('money');
+
+    // Check if we have a saved countdown in session storage
+    if (money === null) money = 0;
+    document.querySelectorAll('.count').forEach(function (element) {
+      element.textContent = money;
+    });
+
+    let updateMoney = function (target) {
+      sessionStorage.setItem('money', target);
+
+      let foundCurrentMilestone = false;
+      document.querySelectorAll('ol.steps li').forEach(function (li) {
+        li.classList.remove('current');
+        if (!foundCurrentMilestone) {
+          // Get the text content of the h2, remove " euro", and convert to a number
+          let amount = parseFloat(li.querySelector('h2').textContent.replace(' euro', '').trim());
+          if (amount !== "inf" ) if (amount >= target) li.classList.add('current');
+        }
+      });
+    }
+
+    let addSubscriberBtn = function () {
+      document.querySelectorAll('.count').forEach(function (element) {
+        let target = parseInt(element.textContent, 10) + 100;
+        let counter = parseInt(element.textContent, 10);
+        let duration = 3000;
+        let stepTime = 10;
+        let steps = duration / stepTime;
+        let increment = target / steps;
+
+        function updateCounter() {
+          counter += increment;
+          element.textContent = Math.ceil(counter);
+          if (counter < target) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            element.textContent = target;
+          }
+        }
+
+        updateCounter();
+        updateMoney(target);
+      });
+    }
+
+    let resetSubscriberBtn = function () {
+      document.querySelectorAll('.count').forEach(function (element) {
+        element.textContent = 0;
+      });
+      updateMoney(0);
+    }
+
+    document.getElementById('addSubscriberBtn').addEventListener('click', addSubscriberBtn);
+    document.getElementById('resetSubscriberBtn').addEventListener('click', resetSubscriberBtn);
+    updateMoney(money);
+  </script>
 
 </body>
+
 </html>
