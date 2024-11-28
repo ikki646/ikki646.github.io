@@ -11,13 +11,7 @@
 </head>
 
 <body>
-  <button id="addSubscriberBtn">
-    <Address>add</Address>
-  </button> <!-- Button to trigger count increment -->
-  <button id="resetSubscriberBtn">
-    <Address>reset</Address>
-  </button> <!-- Button to trigger count increment -->
-  <h1 class="count">200</h1> <!-- This will display the animated count -->
+  <h1 class="count">0</h1> <!-- This will display the animated count -->
   <ol class="steps">
     <li>
       <a href="#">
@@ -70,62 +64,45 @@
   <!-- partial -->
   <script src="./script.js"></script>
   <script>
-    let money = sessionStorage.getItem('money');
+    let money = 0;
+    //document.querySelectorAll('.count').forEach(function (element) { element.textContent = money });
 
-    // Check if we have a saved countdown in session storage
-    if (money === null) money = 0;
-    document.querySelectorAll('.count').forEach(function (element) {
-      element.textContent = money;
-    });
+    setInterval(async () => {
+      try {
+        const response = await fetch('https://hallebardiers-warmste-week.onrender.com/money-raised/');
+        const data = await response.json();
+        let newValue = data.money;
+        let difference = newValue - money;
 
-    let updateMoney = function (target) {
-      sessionStorage.setItem('money', target);
+        // Update the UI with the new value
+        if (difference !== 0) {
+          let duration =3000;
+          let stepTime = 10;
+          let steps = duration / stepTime;
+          let increment = difference / steps;
 
-      let foundCurrentMilestone = false;
-      document.querySelectorAll('ol.steps li').forEach(function (li) {
-        li.classList.remove('current');
-        if (!foundCurrentMilestone) {
-          // Get the text content of the h2, remove " euro", and convert to a number
-          let amount = parseFloat(li.querySelector('h2').textContent.replace(' euro', '').trim());
-          if (amount !== "inf" ) if (amount >= target) li.classList.add('current');
+          console.log(`fetched, difference: ${difference}, steps: ${stepTime}, increment: ${increment}`);
+
+          document.querySelectorAll('.count').forEach(function (element) {
+            function updateCounter() {
+              money += increment;
+              if (money < newValue) {
+                requestAnimationFrame(updateCounter);
+                element.textContent = Math.ceil(money);
+              } else {
+                element.textContent = newValue;
+                money = newValue;
+              }
+            }
+
+            updateCounter();
+          });
         }
-      });
-    }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }, 3000);  // Poll every 3 seconds
 
-    let addSubscriberBtn = function () {
-      document.querySelectorAll('.count').forEach(function (element) {
-        let target = parseInt(element.textContent, 10) + 100;
-        let counter = parseInt(element.textContent, 10);
-        let duration = 3000;
-        let stepTime = 10;
-        let steps = duration / stepTime;
-        let increment = target / steps;
-
-        function updateCounter() {
-          counter += increment;
-          element.textContent = Math.ceil(counter);
-          if (counter < target) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            element.textContent = target;
-          }
-        }
-
-        updateCounter();
-        updateMoney(target);
-      });
-    }
-
-    let resetSubscriberBtn = function () {
-      document.querySelectorAll('.count').forEach(function (element) {
-        element.textContent = 0;
-      });
-      updateMoney(0);
-    }
-
-    document.getElementById('addSubscriberBtn').addEventListener('click', addSubscriberBtn);
-    document.getElementById('resetSubscriberBtn').addEventListener('click', resetSubscriberBtn);
-    updateMoney(money);
   </script>
 
 </body>

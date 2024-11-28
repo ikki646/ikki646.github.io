@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Flip Clock &amp; Countdown</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./loading-bar-style.css">
+  <script src="https://cdn.jsdelivr.net/npm/countup.js"></script>
+</head>
+
+<body>
+  <div>
+    <input type="text" id="subscriberInput" placeholder="Enter value">
+    <button id="addSubscriberBtn">
+      <address>add</address>
+    </button>
+  </div>
+  <button id="resetSubscriberBtn">
+    <address>reset</address>
+  </button>
+
+  <!-- partial -->
+  <script>
+    // URL to send the POST request
+
+    // Get references to the elements
+    const addSubscriberBtn = document.getElementById('addSubscriberBtn');
+    const subscriberInput = document.getElementById('subscriberInput');
+    const resetSubscriberBtn = document.getElementById('resetSubscriberBtn');
+
+    // Add click event listener to the button
+    addSubscriberBtn.addEventListener('click', () => {
+      const postUrl = "https://hallebardiers-warmste-week.onrender.com/money-raised/add";
+      const value = subscriberInput.value; // Get value from the textbox
+
+      if (value.trim() === "") {
+        alert("Please enter a value before submitting.");
+        return;
+      }
+
+      // Create the POST request
+      fetch(postUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ value }) // Send the value as JSON
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Value submitted successfully!");
+        } else {
+          alert("Failed to submit value.");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while submitting the value.");
+      });
+    });
+
+    resetSubscriberBtn.addEventListener('click', () => {
+      const postUrl = "https://hallebardiers-warmste-week.onrender.com/money-raised/set";
+      const value = 0; 
+
+      // Create the POST request
+      fetch(postUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ value }) // Send the value as JSON
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Value submitted successfully!");
+        } else {
+          alert("Failed to submit value.");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while submitting the value.");
+      });
+    });
+  </script>
+</body>
+
+</html>
