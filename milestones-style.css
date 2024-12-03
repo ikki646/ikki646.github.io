@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #f4f4f9;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 0; /* No margin at the top */
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #777;
+    margin-top: 5px; /* Small margin to separate from title */
+    margin-bottom: 40px;
+  }
+
+  .swiper {
+    width: 80%;
+    height: 100px;
+    padding-bottom: 40px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+    width: 60%;
+  }
+
+  /* Stronger parallax effect */
+  .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform: translateZ(-2px) scale(3); /* Stronger parallax and scale */
+  }
+
+  /* Card content centered with subtitle under title */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .card-subtitle {
+    font-size: 16px;
+    color: #777;
+    margin-top: 10px;
+  }
+
+  .navigation-buttons {
+    margin-top: 20px;
+  }
+
+  .navigation-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
