@@ -3,89 +3,60 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Flip Clock &amp; Countdown</title>
+  <title>Modern Input and Buttons with Date-Time Picker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./loading-bar-style.css">
-  <script src="https://cdn.jsdelivr.net/npm/countup.js"></script>
+  <link rel="stylesheet" href="./control-style.css">
 </head>
 
 <body>
-  <div>
-    <input type="text" id="subscriberInput" placeholder="Enter value">
-    <button id="addSubscriberBtn">
-      <address>add</address>
+  <!-- First Row: Money Input and Buttons -->
+    <button id="addFiveEuroBtn">
+      <address>5 Euro</address>
     </button>
   </div>
-  <button id="resetSubscriberBtn">
-    <address>reset</address>
-  </button>
+  <div class="row">
+    <input type="text" id="moneyInput" placeholder="Enter value">
+    <button id="addMoneyBtn">
+      <address>add</address>
+    </button>
+    <button id="setMoneyBtn">
+      <address>set</address>
+    </button>
+  </div>
 
-  <!-- partial -->
-  <script>
-    // URL to send the POST request
+</br>
+</br>
+</br>
+</br>
+</br>
 
-    // Get references to the elements
-    const addSubscriberBtn = document.getElementById('addSubscriberBtn');
-    const subscriberInput = document.getElementById('subscriberInput');
-    const resetSubscriberBtn = document.getElementById('resetSubscriberBtn');
+  <!-- Second Row: Date-Time Pickers and Buttons -->
+  <div class="row">
+    <input id="dateInput" type="date" id="datePicker">
+    <input id="timeInput" type="time" id="timePicker">
+    <button id="addStartTimeBtn">
+      <address>add time</address>
+    </button>
+    <button id="setStartTimeBtn">
+      <address>set Start time</address>
+    </button>
+  </div>
 
-    // Add click event listener to the button
-    addSubscriberBtn.addEventListener('click', () => {
-      const postUrl = "https://hallebardiers-warmste-week.onrender.com/money-raised/add";
-      const value = subscriberInput.value; // Get value from the textbox
+  <div class="row"></div>
 
-      if (value.trim() === "") {
-        alert("Please enter a value before submitting.");
-        return;
-      }
+  <!-- Third Row: milestones -->
+  <div class="row">
+    <input type="text" id="milestoneTitleInput" placeholder="Enter milestone title">
+    <input type="text" id="milestoneMoneyInput" placeholder="Enter milestone money">
+    <button id="addMilestoneBtn">
+      <address>add</address>
+    </button>
+    <button id="removeMilestoneBtn">
+      <address>remove</address>
+    </button>
+  </div>
 
-      // Create the POST request
-      fetch(postUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ value }) // Send the value as JSON
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Value submitted successfully!");
-        } else {
-          alert("Failed to submit value.");
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("An error occurred while submitting the value.");
-      });
-    });
-
-    resetSubscriberBtn.addEventListener('click', () => {
-      const postUrl = "https://hallebardiers-warmste-week.onrender.com/money-raised/set";
-      const value = 0; 
-
-      // Create the POST request
-      fetch(postUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ value }) // Send the value as JSON
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Value submitted successfully!");
-        } else {
-          alert("Failed to submit value.");
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("An error occurred while submitting the value.");
-      });
-    });
-  </script>
+  <script src="./time-control.js"></script>
+  <script src="./money-control.js"></script>
 </body>
-
 </html>

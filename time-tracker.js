@@ -1,4 +1,4 @@
-console.clear();
+let targetTime = 24;
 
 function CountdownTracker(label, value) {
   var el = document.createElement('span');
@@ -46,7 +46,6 @@ function getTimeRemaining(endtime) {
   };
 }
 
-// Function to get current time
 function getTime() {
   var t = new Date();
   return {
@@ -57,85 +56,68 @@ function getTime() {
   };
 }
 
-// Clock constructor
-function Clock(countdown, callback) {
-  countdown = countdown ? new Date(Date.parse(countdown)) : false;
+function Clock(startTime, callback) {
+  startTime = startTime ? new Date(Date.parse(startTime)) : new Date();
   callback = callback || function () { };
 
-  var updateFn = countdown ? getTimeRemaining : getTime;
+  function getTimeElapsed(start) {
+    const now = new Date();
+    const elapsed = now - start;
+    return {
+      Total: elapsed,
+      Hours: Math.floor((elapsed / (1000 * 60 * 60)) % 24),
+      Minutes: Math.floor((elapsed / (1000 * 60)) % 60),
+      Seconds: Math.floor((elapsed / 1000) % 60),
+      Milliseconds: Math.floor(elapsed % 1000)
+    };
+  }
+
+  const targetDuration = targetTime * 60 * 60 * 1000;
 
   this.el = document.createElement('div');
   this.el.className = 'flip-clock';
 
-  var trackers = {},
-    t = updateFn(countdown),
-    key, timeinterval;
+  const trackers = {};
+  const updateFn = getTimeElapsed;
+  const initialTime = updateFn(this.startTime);
+  let timeinterval;
 
-  for (key in t) {
+  // Initialize time trackers
+  for (let key in initialTime) {
     if (key === 'Total') { continue; }
-    trackers[key] = new CountdownTracker(key, t[key]);
+    trackers[key] = new CountdownTracker(key, initialTime[key]);
     this.el.appendChild(trackers[key].el);
   }
 
-  var i = 0;
+  let i = 0;
+
   this.updateClock = function () {
     timeinterval = requestAnimationFrame(this.updateClock.bind(this));
 
-    // throttle so it's not constantly updating the time.
+    // Throttle updates to reduce rendering frequency
     if (i++ % 10) { return; }
 
-    var t = updateFn(countdown);
-    if (t.Total < 0) {
+    const elapsed = updateFn(this.startTime);
+
+    // Stop if elapsed time exceeds the target duration
+    if (elapsed.Total >= targetDuration) {
       cancelAnimationFrame(timeinterval);
-      for (key in trackers) {
-        trackers[key].update(0);
+      for (let key in trackers) {
+        trackers[key].update(0); // Set everything to 0 (optional)
       }
-      callback();
+      callback(); // Trigger callback if provided
       return;
     }
 
-    for (key in trackers) {
-      trackers[key].update(t[key]);
+    // Update the trackers with the current elapsed time
+    for (let key in trackers) {
+      trackers[key].update(elapsed[key]);
     }
   };
 
-  // Function to start the countdown
   this.start = function () {
-    setTimeout(this.updateClock.bind(this), 500);
-  };
-
-  this.updateStartData = async function (timestamp) {
-    try {
-      // Make the API request to /setTime
-      const res = await fetch('http://localhost:3000/setTime', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ timestamp: timestamp})
-      });
-
-      const data = await res.json();
-
-      // Handle the response from the server
-      if (res.ok) {
-        responseElement.textContent = `Success: ${data.message}`;
-      } else {
-        responseElement.textContent = `Error: ${data.error || data.message}`;
-      }
-    } catch (error) {
-      responseElement.textContent = "Error: Unable to update the timestamp.";
-    }
-  };
-
-  this.getStartData = async function () {
-
+    this.updateClock();
   }
-
-  // Function to stop the countdown
-  this.stop = function () {
-    cancelAnimationFrame(timeinterval);
-  };
 }
 
 // Function to start the countdown
@@ -145,60 +127,29 @@ function startCountdown() {
   return deadline;
 }
 
-// Create buttons to control the timer
-var startButton = document.createElement('button');
-startButton.innerText = 'Start Countdown';
-document.body.appendChild(startButton);
-
-var resetButton = document.createElement('button');
-resetButton.innerText = 'stop Countdown';
-resetButton.disabled = true; // Initially disabled
-document.body.appendChild(resetButton);
-
-var c;
-
-// Set up the button click events
-startButton.onclick = function () {
-  // Only create a new countdown if one isn't already running
-  if (!c) {
-    var endTime = sessionStorage.getItem('countdownEndTime');
-    var deadline;
-
-    // Check if we have a saved countdown in session storage
-    if (endTime) {
-      deadline = new Date(endTime);
-    } else {
-      deadline = startCountdown(); // Start a new countdown and save the end time
-    }
-
-    //this.updateStartData(endTime);
-
-    c = new Clock(deadline, function () { alert('Countdown complete'); });
-    document.body.appendChild(c.el);
-    c.start(); // Start the clock
-    startButton.disabled = true; // Disable the button to prevent multiple clicks
-    resetButton.disabled = false; // Enable the reset button
-  }
-};
-
-resetButton.onclick = function () {
-  if (c) {
-    c.stop(); // Stop the countdown if running
-    sessionStorage.removeItem('countdownEndTime'); // Clear session storage
-    document.body.removeChild(c.el); // Remove the countdown display
-    c = null; // Reset the clock variable
-    startButton.disabled = false; // Enable the start button
-    resetButton.disabled = true; // Disable the reset button
-  }
-};
-
-// Start countdown if there's an existing session
-if (sessionStorage.getItem('countdownEndTime')) {
-  var savedEndTime = sessionStorage.getItem('countdownEndTime');
-  var savedDeadline = new Date(savedEndTime);
-  c = new Clock(savedDeadline, function () { alert('Countdown complete'); });
-  document.body.appendChild(c.el);
-  c.start(); // Start the clock
-  startButton.disabled = true; // Disable the start button
-  resetButton.disabled = false; // Enable the reset button
+function createClock() {
+  var clock = new Clock(null, function () { alert('Countdown complete'); });
+  document.body.appendChild(clock.el);
+  return clock;
 }
+
+async function updateClock() {
+  try {
+    console.log("updating")
+    const response = await fetch('https://hallebardiers-warmste-week.onrender.com/start-time/');
+    const data = await response.json();
+    let timestampString = data.timestamp;
+    let timestamp = new Date(timestampString);
+    console.log("startTimestamp ", timestamp);
+
+    if (timestamp) clock.startTime = timestamp;
+  } catch (error) {
+    console.error('Error fetching time data:', error);
+  }
+}
+
+let clock = createClock();
+clock.start();
+
+updateClock();
+setInterval(updateClock, 10000);
