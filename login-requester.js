@@ -5,7 +5,7 @@ document.getElementById('passwordForm').addEventListener('submit', async functio
 
     try {
         // Replace this URL with the actual Web API endpoint
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('https://hallebardiers-warmste-week.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
