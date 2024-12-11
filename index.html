@@ -1,70 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swiper with Titles Inside Cards and Top Title</title>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-  <link rel="stylesheet" href="./milestones-style.css">
-  <link rel="stylesheet" href="./counter-style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Submission</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
-
-  <!-- Title and Subtitle at the top -->
-  <div class="title">Schermen tegen eenzaamheid</div>
-  <div class="subtitle">Warmste week</div>
-
-  <h1 class="count">0</h1> <!-- This will display the animated count -->
-
-  <!-- Main Swiper -->
-  <div class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="card-content">
-          <div class="card-title">Milestone 1</div>
-          <div class="card-subtitle">100 euro</div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="card-content">
-          <div class="card-title">Milestone 2</div>
-          <div class="card-subtitle">200 euro</div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="card-content">
-          <div class="card-title">Milestone 3</div>
-          <div class="card-subtitle">400 euro</div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="card-content">
-          <div class="card-title">Milestone 4</div>
-          <div class="card-subtitle">800 euro</div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="card-content">
-          <div class="card-title">Milestone 5</div>
-          <div class="card-subtitle">1600 euro</div>
-        </div>
-      </div>
+    <div class="container">
+        <h2>Enter Password</h2>
+        <form id="passwordForm">
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-    <div class="swiper-pagination"></div>
-  </div>
 
-</br>
-</br>
-</br>
-
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="milestones-controller.js"></script>
-  <script src="./donation-money-counter.js"></script>
-
-  <link rel="stylesheet" href="./clock-style.css">
-  <script src="./time-tracker.js"></script>
+    <script src="./login-requester.js"></script>
 </body>
-
 </html>

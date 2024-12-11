@@ -11,18 +11,23 @@ body {
 }
 
 .title {
-  font-size: 36px;
-  font-weight: bold;
+  font-size: 56px;
+  font-weight: bolder;
   margin-top: 0;
+  color: #FFFFFF;
+  background-color: #D30C13;
+  padding: 10px;
   /* No margin at the top */
 }
 
 .subtitle {
-  font-size: 18px;
-  color: #777;
-  margin-top: 5px;
+  font-size: 36px;
+  color: #FFFFFF;
+  background-color: #FABB19;
+  margin-top: 6px;
   /* Small margin to separate from title */
   margin-bottom: 40px;
+  padding: 4px;
 }
 
 .swiper {
