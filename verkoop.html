@@ -23,10 +23,9 @@
       flex-direction: column;
       align-items: center;
       gap: 15px;
-      margin-bottom: 20px;
     }
 
-    input[type="text"], input[type="date"], input[type="time"] {
+    .row input[type="text"] {
       font-size: 1.5em;
       padding: 10px;
       width: 80%;
@@ -35,7 +34,7 @@
       border-radius: 8px;
     }
 
-    button {
+    .row button {
       font-size: 1.5em;
       padding: 12px 20px;
       width: 80%;
@@ -47,7 +46,7 @@
       cursor: pointer;
     }
 
-    button:hover {
+    .row button:hover {
       background-color: #45a049;
     }
 
@@ -61,25 +60,16 @@
 
 <body>
   <!-- Title -->
-  <h1>Control</h1>
+  <h1>Verkoop</h1>
 
   <!-- First Row: Money Input and Buttons -->
   <div class="row">
     <input type="text" id="moneyInput" placeholder="euro">
     <button id="addMoneyBtn">Add</button>
-    <button id="setMoneyBtn">Set</button>
   </div>
 
-  <!-- Second Row: Date-Time Pickers and Buttons -->
-  <div class="row">
-    <input id="dateInput" type="date">
-    <input id="timeInput" type="time">
-    <button id="setStartTimeBtn">Set Start Time</button>
-  </div>
-
-  <script src="./cc.js"></script>
-  <script src="./time-control.js"></script>
-  <script src="./money-control.js"></script>
+  <script src="./c.js"></script>
+  <script src="./verkoop.js"></script>
 </body>
 
 </html>

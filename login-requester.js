@@ -20,7 +20,7 @@ document.getElementById('passwordForm').addEventListener('submit', async functio
         const result = await response.text();
         sessionStorage.setItem("auth", result);
         // Navigate to a new page with the returned string
-        window.location.href = `counter.html`;
+        window.location.href = `router.html`;
     } catch (error) {
         window.location.href = 'https://www.google.com';
         alert('An error occurred: ' + error.message);

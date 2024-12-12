@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    button {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      width: 80%;
+      max-width: 300px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Title -->
+  <h1>Navigation</h1>
+
+  <!-- Buttons Row -->
+  <div class="row">
+    <button onclick="location.href='counter.html'">Counter</button>
+    <button onclick="location.href='control.html'">Control</button>
+    <button onclick="location.href='verkoop.html'">Verkoop</button>
+  </div>
+
+</body>
+
+</html>

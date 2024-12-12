@@ -1,53 +1,11 @@
 // URL to send the POST request
 
 // Get references to the elements
-const addStartTimeBtn = document.getElementById('addStartTimeBtn');
 const dateInput = document.getElementById('dateInput');
 const timeInput = document.getElementById('timeInput');
 const setStartTimeBtn = document.getElementById('setStartTimeBtn');
 
 // Add click event listener to the button
-addStartTimeBtn.addEventListener('click', () => {
-    const postUrl = "https://hallebardiers-warmste-week.onrender.com/start-time/add";
-    const timeValue = timeInput.value; // HH:mm format
-
-    // Validate that both date and time are selected
-    if (!timeValue) {
-      alert('Please select both a date and a time.');
-      return;
-    }
-
-    // Combine date and time into a single ISO string
-    const timestamp = new Date(Date.UTC(1970, 0, 1, ...timeValue.split(":"))).toISOString(); //since unix epoch
-    console.log(timestamp)
-
-    // Validate that the timestamp is correctly formed
-    if (isNaN(new Date(timestamp))) {
-      alert('Invalid date or time format.');
-      return;
-    }
-
-    // Create the POST request
-    fetch(postUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ timestamp }) // Send the value as JSON
-    })
-        .then(response => {
-            if (response.ok) {
-                alert("Value submitted successfully!");
-            } else {
-                alert("Failed to submit value.");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while submitting the value.");
-        });
-});
-
 setStartTimeBtn.addEventListener('click', () => {
     const postUrl = "https://hallebardiers-warmste-week.onrender.com/start-time/set";
     const dateValue = dateInput.value; // yyyy-mm-dd format
