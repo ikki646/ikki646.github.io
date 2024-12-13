@@ -103,7 +103,7 @@ function Clock(startTime, callback) {
     if (elapsed.Total >= targetDuration) {
       cancelAnimationFrame(timeinterval);
       for (let key in trackers) {
-        trackers[key].update(0); // Set everything to 0 (optional)
+        trackers[key].update((key == 'Hours') ? targetTime : 0);
       }
       callback(); // Trigger callback if provided
       return;
@@ -128,7 +128,10 @@ function startCountdown() {
 }
 
 function createClock() {
-  var clock = new Clock(null, function () { alert('Countdown complete'); });
+  var clock = new Clock(null, function () { 
+      const element = document.querySelector('.hidden-pyro');
+      if (element) element.classList.replace('hidden-pyro', 'pyro');
+   });
   document.body.appendChild(clock.el);
   return clock;
 }

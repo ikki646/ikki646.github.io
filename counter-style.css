@@ -1,5 +1,15 @@
+.im-fell-english-sc-regular {
+    font-family: "IM Fell English SC", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+font-family: "IM Fell English SC", serif;
+}
+
 h1.count {
-    font-size: 7em;
+    font-size: 12em;
     color: #FFFFFF;
     margin: 0%
 }

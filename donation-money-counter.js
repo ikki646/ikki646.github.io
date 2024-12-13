@@ -22,10 +22,10 @@ async function updateCounter() {
                     money += increment;
                     if (money < newValue) {
                         requestAnimationFrame(updateCounter);
-                        element.textContent = `${Math.ceil(money)} €`;
+                        element.textContent = `€ ${money.toFixed(2)}`;
                     } else {
-                        element.textContent = `${newValue} €`;
                         money = newValue;
+                        element.textContent = `€ ${money.toFixed(2)}`;
                     }
                 }
 
